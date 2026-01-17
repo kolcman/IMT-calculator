@@ -11,16 +11,18 @@ var result float64
 
 func main() {
 	fmt.Println("******* Калькулято ИМТ *******")
-	result := calculateIMT(readValue("рост"), readValue("вес"))
+	result := calculateIMT(getUserIfnfo())
 	fmt.Printf("Ваш ИМТ: %.1f\n", result)
 	fmt.Println("******* ************** *******")
 }
 
-func readValue(typeValue string) float64 {
-	var height float64
-	fmt.Printf("Введите свой %v: ", typeValue)
+func getUserIfnfo() (float64, float64) {
+	var height, weight float64
+	fmt.Printf("Введите свой рост в сантиметрах: ")
 	fmt.Scan(&height)
-	return height
+	fmt.Printf("Введите свой вес в киллограммах: ")
+	fmt.Scan(&weight)
+	return height, weight
 }
 
 func calculateIMT(height, weight float64) float64 {
