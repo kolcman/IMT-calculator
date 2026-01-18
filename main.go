@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"math"
 	"strings"
@@ -17,7 +18,11 @@ func main() {
 		if input == "q" {
 			break
 		}
-		result := calculateIMT(getUserInfo())
+		result, err := calculateIMT(getUserInfo())
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
 		fmt.Print(result)
 		printResult(result)
 		fmt.Println("******************************")
@@ -47,9 +52,12 @@ func getUserInfo() (float64, float64) {
 	return height, weight
 }
 
-func calculateIMT(height, weight float64) float64 {
+func calculateIMT(height, weight float64) (float64, error) {
+	if height <= 0 || weight <= 0 {
+		return 0, errors.New("Ошибка! Не указан вес или рост")
+	}
 	IMT := weight / math.Pow(height/100, IMT_POWER)
-	return IMT
+	return IMT, nil
 }
 
 func printResult(imt float64) {
