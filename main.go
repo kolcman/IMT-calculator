@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"strings"
 )
 
 const IMT_POWER = 2
@@ -10,18 +11,38 @@ const IMT_POWER = 2
 var result float64
 
 func main() {
-	fmt.Println("******* Калькулято ИМТ *******")
-	result := calculateIMT(getUserInfo())
-	fmt.Print(result)
-	printResult(result)
-	fmt.Println("******* ************** *******")
+	for {
+		showMenu()
+		input := getChoice()
+		if input == "q" {
+			break
+		}
+		result := calculateIMT(getUserInfo())
+		fmt.Print(result)
+		printResult(result)
+		fmt.Println("******************************")
+	}
+}
+
+func showMenu() {
+	fmt.Println("************** Калькулятор ИМТ ***************")
+	fmt.Println("     Для продложения нажмите любую кнопку		 ")
+	fmt.Println("     \"Q\" - Выход из программы							 ")
+	fmt.Println("**********************************************")
+}
+
+func getChoice() string {
+	var input string
+	fmt.Scan(&input)
+	inputString := strings.TrimSpace(strings.ToLower(input))
+	return inputString
 }
 
 func getUserInfo() (float64, float64) {
 	var height, weight float64
 	fmt.Printf("Введите свой рост в сантиметрах: ")
 	fmt.Scan(&height)
-	fmt.Printf("Введите свой вес в киллограммах: ")
+	fmt.Printf("Введите свой вес в килограммах: ")
 	fmt.Scan(&weight)
 	return height, weight
 }
